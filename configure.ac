@@ -189,11 +189,19 @@ AM_COND_IF([ENABLE_HCITOP], [
 ])
 
 AC_ARG_ENABLE([manpages],
-	AS_HELP_STRING([--enable-manpages], [enable building of man pages (requires pandoc)]))
+	AS_HELP_STRING([--enable-manpages], [enable building of man pages (requires either pandoc or ronn)]))
+AC_ARG_WITH([ronn],
+	AS_HELP_STRING([--with-ronn], [force build man pages with ronn, imply --enable-manpages]))
+AS_IF([test "x${with_ronn:-no}" != "xno" ], [ enable_manpages=yes ])
 AM_CONDITIONAL([ENABLE_MANPAGES], [test "x$enable_manpages" = "xyes"])
+AM_CONDITIONAL([WITH_RONN], [test "x${with_ronn:-no}" != "xno"])
+AS_IF([test "x${with_ronn:+yes}" = "xyes" ], [ with_ronn=ronn ])
 AM_COND_IF([ENABLE_MANPAGES], [
-	AC_PATH_PROG([PANDOC], [pandoc])
-	AS_IF([test "x$PANDOC" = "x"], [AC_MSG_ERROR([[--enable-manpages requires pandoc]])])
+	AM_COND_IF([WITH_RONN], [], [AC_PATH_PROG([PANDOC], [pandoc])])
+	AM_CONDITIONAL([WITH_RONN], [test "x$PANDOC" = "x"])
+	AM_COND_IF([WITH_RONN], [AC_PATH_PROGS([RONN], ["$with_ronn" ronn])])
+	AS_IF([test "x$PANDOC$RONN" = "x"],
+		[AC_MSG_ERROR([[--enable-manpages requires either pandoc or ronn]])])
 ])
 
 AC_ARG_ENABLE([test],

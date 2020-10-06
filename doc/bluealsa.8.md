@@ -1,6 +1,6 @@
 % BLUEALSA(8) $VERSION$ | System Manager's Manual
 %
-% August 2020
+% $RELEASE_DATE$
 
 # NAME
 

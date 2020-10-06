@@ -5,6 +5,7 @@ AC_PREREQ([2.60])
 AC_INIT([BlueALSA],
 	[m4_normalize(esyscmd([test -d .git && git describe || echo v3.0.0]))],
 	[arkadiusz.bokowy@gmail.com], [bluez-alsa], [https://github.com/Arkq/bluez-alsa])
+AC_SUBST([RELEASE_DATE],"2020-08-01")
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
 
 AC_CONFIG_SRCDIR([src/bluealsa.c])

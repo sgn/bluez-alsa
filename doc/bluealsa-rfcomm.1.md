@@ -1,6 +1,6 @@
 % BLUEALSA-RFCOMM(1) $VERSION$ | General Commands Manual
 %
-% August 2020
+% $RELEASE_DATE$
 
 # NAME
 
